@@ -1,0 +1,140 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+    Kate syntax highlight filter for PmWiki markup.
+
+    Copyright 2016 dohliam. https://github.org/dohliam
+    Dual-Licensed under both GPL and BSD licenses.
+
+    Based on kate-markdown by Claes Holmerson: http://github.com/claes/kate-markdown/
+-->
+<!DOCTYPE language SYSTEM "language.dtd"
+[
+<!ENTITY strongemphasisregex "'''''[^']+'''''">
+<!ENTITY strongregex "(^|[^'])'''[^']+'''([^']|$)">
+<!ENTITY emphasisregex "(^|[^'])''[^']+''([^']|$)">
+<!ENTITY reflinkregex '\[\[(http|https|mailto|ftp|news|gopher|nap|file|tel|geo)://[^\]]+\]\]'>
+<!ENTITY locallinkregex '\[\[[^\]]+\]\]'>
+<!ENTITY superscriptregex "\^[^\^]+\^">
+<!ENTITY subscriptregex "_[^_]+_">
+<!ENTITY pagevarregex "\{[^\}]+\}">
+<!ENTITY inlinelinkregex '(http|https|mailto|ftp|news|gopher|nap|file|tel|geo)://[^\s\)$]+'>
+<!ENTITY inlineimageregex '\[\[(http|https|mailto|ftp|news|gopher|nap|file|tel|geo)://[^\]]+\.(jpg|gif|jpeg|png|JPG|GIF|JPEG|PNG)\]\]'>
+<!ENTITY rulerregex "^\-\-\-\-$">
+<!ENTITY linebreakregex "\+$">
+<!ENTITY commentregex "\(:comment\s[^:]+:\)">
+<!ENTITY pdirectiveregex "\(:[^:]+:\)">
+<!ENTITY strikeoutregex "\{\-[^\-]+\-\}">
+]>
+<language name="PmWiki" version="1.5.2" kateversion="3.7" section="Markup" extensions="*.pmwiki" priority="15" author="dohliam" license="GPL,BSD">
+  <highlighting>
+    <contexts>
+      <context attribute="Normal Text" lineEndContext="#stay" name="Normal Text">
+	<RegExpr attribute="blockquote" String="^%[a-z]+%\s.*$"/>
+        <RegExpr attribute="h1" String="^!.*$"/>
+        <RegExpr attribute="h2" String="^!!.*$"/>
+        <RegExpr attribute="h3" String="^!!!.*$"/>
+        <RegExpr attribute="h4" String="^!!!!.*$"/>
+        <RegExpr attribute="h5" String="^!!!!!.*$"/>
+        <RegExpr attribute="h6" String="^!!!!!!.*$"/>
+        <RegExpr attribute="ruler" String="&rulerregex;"/>
+        <RegExpr attribute="strong" String="&strongregex;"/>
+        <RegExpr attribute="emphasis" String="&emphasisregex;"/>
+        <RegExpr attribute="strongemphasis" String="&strongemphasisregex;"/>
+        <RegExpr attribute="elementattribute" String="&elattributeregex;"/>
+        <RegExpr attribute="documentattribute" String="&docattributeregex;"/>
+        <RegExpr context="bullet" String="^[\*\+]"/>
+        <RegExpr context="numlist" String="^#+"/>
+        <RegExpr context="table" String="^\|\|.*$"/>
+        <RegExpr attribute="meta" String="^(Title|Author|Date|Copyright|Revision|CSS|LaTeX\ XSLT|Categories|Tags|BaseName|Excerpt):(.*)+$"/>
+        <IncludeRules context="inc"/>
+      </context>
+     <context attribute="blockquote" lineEndContext="#stay" lineEmptyContext="#pop" name="blockquote">
+        <RegExpr attribute="bq-strong" String="&strongregex;"/>
+        <RegExpr attribute="bq-emphasis" String="&emphasisregex;"/>
+        <IncludeRules context="inc"/>
+      </context>
+      <context attribute="bullet" lineEndContext="#stay" lineEmptyContext="#pop" name="bullet">
+        <RegExpr attribute="bl-strong" String="&strongregex;"/>
+        <RegExpr attribute="bl-emphasis" String="&emphasisregex;"/>
+        <IncludeRules context="inc"/>
+      </context>
+      <context attribute="table" lineEndContext="#stay" lineEmptyContext="#pop" name="table">
+        <RegExpr attribute="bl-strong" String="&strongregex;"/>
+        <RegExpr attribute="bl-emphasis" String="&emphasisregex;"/>
+        <IncludeRules context="inc"/>
+      </context>
+      <context attribute="numlist" lineEndContext="#stay" lineEmptyContext="#pop" name="numlist">
+        <RegExpr attribute="nl-strong" String="&strongregex;"/>
+        <RegExpr attribute="nl-emphasis" String="&emphasisregex;"/>
+        <IncludeRules context="inc"/>
+      </context>
+      <context attribute="common" name="inc" lineEndContext="#stay">
+        <RegExpr attribute="code" String="\[@[^@]+@\]"/>
+        <RegExpr attribute="monospace" String="@@[^@]+@@"/>
+        <RegExpr attribute="reflink" String="&reflinkregex;"/>
+        <RegExpr attribute="superscript" String="&superscriptregex;"/>
+        <RegExpr attribute="subscript" String="&subscriptregex;"/>
+        <RegExpr attribute="inlinelink" String="&inlinelinkregex;"/>
+        <RegExpr attribute="locallink" String="&locallinkregex;"/>
+        <RegExpr attribute="inlineimage" String="&inlineimageregex;"/>
+        <RegExpr attribute="refimage" String="&refimageregex;"/>
+        <RegExpr attribute="autolink" String="&autolinkregex;"/>
+        <RegExpr attribute="mailtolink" String="&mailtolinkregex;"/>
+        <RegExpr attribute="pagevar" String="&pagevarregex;"/>
+        <RegExpr attribute="pdirective" String="&pdirectiveregex;"/>
+        <RegExpr attribute="singlelinecomment" String="&commentregex;"/>
+        <RegExpr attribute="strikeout" minimal="true" String="&strikeoutregex;"/>
+        <RegExpr attribute="linebreak" minimal="true" String="&linebreakregex;"/>
+      </context>
+    </contexts>
+    <itemDatas>
+      <itemData name="Normal Text" defStyleNum="dsNormal"/>
+      <itemData name="common" defStyleNum="dsNormal"/>
+      <itemData name="strongemphasis" defStyleNum="dsNormal" italic="true" bold="true"/>
+      <itemData name="emphasis" defStyleNum="dsNormal" italic="true"/>
+      <itemData name="strong" defStyleNum="dsNormal" bold="true"/>
+      <itemData name="ruler" defStyleNum="dsNormal" bold="true"/>
+      <itemData name="strikeout" defStyleNum="dsNormal" strikeOut="true"/>
+      <itemData name="linebreak" defStyleNum="dsNormal" underline="true" color="#999999"/>
+      <itemData name="h1" defStyleNum="dsFunction" bold="true"/>
+      <itemData name="h2" defStyleNum="dsFunction" bold="true"/>
+      <itemData name="h3" defStyleNum="dsFunction" bold="true"/>
+      <itemData name="h4" defStyleNum="dsFunction" bold="true"/>
+      <itemData name="h5" defStyleNum="dsFunction" bold="true"/>
+      <itemData name="h6" defStyleNum="dsFunction" bold="true"/>
+      <itemData name="blockquote" defStyleNum="dsDataType"/>
+      <itemData name="bq-emphasis" defStyleNum="dsDataType" italic="true"/>
+      <itemData name="bq-strong" defStyleNum="dsDataType" bold="true"/>
+      <itemData name="bullet" defStyleNum="dsFloat"/>
+      <itemData name="table" defStyleNum="dsFloat"/>
+      <itemData name="bl-emphasis" defStyleNum="dsFloat" italic="true"/>
+      <itemData name="bl-strong" defStyleNum="dsFloat" bold="true"/>
+      <itemData name="numlist" defStyleNum="dsFloat"/>
+      <itemData name="nl-emphasis" defStyleNum="dsFloat" italic="true"/>
+      <itemData name="nl-strong" defStyleNum="dsFloat" bold="true"/>
+      <itemData name="comment" defStyleNum="dsComment"/>
+      <itemData name="singlelinecomment" defStyleNum="dsComment"/>
+      <itemData name="code" defStyleNum="dsBaseN"/>
+      <itemData name="monospace" defStyleNum="dsBaseN"/>
+      <itemData name="elementattribute" defStyleNum="dsBaseN"/>
+      <itemData name="documentattribute" defStyleNum="dsBaseN"/>
+      <itemData name="reflink" defStyleNum="dsOthers" underline="true"/>
+      <itemData name="inlinelink" defStyleNum="dsOthers" underline="true"/>
+      <itemData name="autolink" defStyleNum="dsOthers" underline="true"/>
+      <itemData name="mailtolink" defStyleNum="dsOthers" underline="false"/>
+      <itemData name="superscript" defStyleNum="dsFloat" italic="false"/>
+      <itemData name="subscript" defStyleNum="dsFloat" italic="true"/>
+      <itemData name="pagevar" defStyleNum="dsComment" italic="true"/>
+      <itemData name="pdirective" defStyleNum="dsComment"/>
+      <itemData name="meta" defStyleNum="dsComment"/>
+      <itemData name="locallink" defStyleNum="dsDataType" italic="false" bold="false"/>
+      <itemData name="inlineimage" defStyleNum="dsAlert" italic="false" bold="false"/>
+      <itemData name="refimage" defStyleNum="dsAlert" italic="false" bold="false"/>
+    </itemDatas>
+  </highlighting>
+  <general>
+    <comments>
+      <comment name="multiLine" start="(:comment " end=":)"/>
+    </comments>
+  </general>
+</language>

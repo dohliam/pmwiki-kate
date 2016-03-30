@@ -1,0 +1,33 @@
+!!Basic formatting
+'''bold text''' ''italic text'' '''''bold and italic text'''''
+
+@@monospace text@@ ^superscript^ _subscript_
+
+[[Link]] - A local link
+[[Link|A local link with link text]]
+
+https://example.com ftp://example.com mailto://email@example.com
+[[https://example.com|Example]] - External link with link text
+
+Unordered list:
+*Item 1
+*Item 2
+**Sub-item
+
+Ordered list:
+#Item 1
+#Item 2
+##Sub-item
+
+Table:
+|| border=1
+||! A special table !||
+||! cell 1 ||! cell 2 ||! cell 3 ||
+|| cell 1  ||  cell 2 ||  cell 3 ||
+
+{$variable} - page variable
+(:noheader:) - page directive
+
+%center% page styles example
+
+(:comment an inline comment example:)
